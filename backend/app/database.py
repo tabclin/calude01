@@ -11,6 +11,7 @@ engine = create_engine(
     pool_pre_ping=True,       # reconecta automaticamente se a conexão cair
     pool_size=10,
     max_overflow=20,
+    connect_args={"sslmode": "require"},  # Supabase exige SSL
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
