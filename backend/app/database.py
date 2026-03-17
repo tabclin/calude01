@@ -7,11 +7,10 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from app.config import settings
 
 engine = create_engine(
-    settings.DATABASE_URL,
-    pool_pre_ping=True,       # reconecta automaticamente se a conexão cair
-    pool_size=10,
-    max_overflow=20,
-    connect_args={"sslmode": "require"},  # Supabase exige SSL
+    settings.DATABASE_URL + "?sslmode=require",
+    pool_pre_ping=True,
+    pool_size=5,
+    max_overflow=10,
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
