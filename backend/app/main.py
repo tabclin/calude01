@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import engine, Base
-from app.routers import dashboard, patients, products, transactions, expenses, goals
+from app.routers import dashboard, patients, products, transactions, expenses, goals, clinics
 
 
 @asynccontextmanager
@@ -37,6 +37,7 @@ app.add_middleware(
 # ── Routers ───────────────────────────────────────────────────────────────────
 API_PREFIX = "/api/v1"
 
+app.include_router(clinics.router,      prefix=f"{API_PREFIX}/clinics",       tags=["Clínicas"])
 app.include_router(dashboard.router,    prefix=f"{API_PREFIX}/dashboard",    tags=["Dashboard"])
 app.include_router(patients.router,     prefix=f"{API_PREFIX}/patients",      tags=["Pacientes"])
 app.include_router(products.router,     prefix=f"{API_PREFIX}/products",      tags=["Produtos/Serviços"])
