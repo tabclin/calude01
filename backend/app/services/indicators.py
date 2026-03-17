@@ -135,10 +135,10 @@ def get_level2_revenue(db: Session, clinic_id: str, year: int, month: int) -> Le
 
     top_products = []
     for r in rows:
-        prod_goal = _get_goal(db, clinic_id, "product_revenue", year, month, product_id=r.product_id)
+        prod_goal = _get_goal(db, clinic_id, "product_revenue", year, month, product_id=str(r.product_id))
         rev = Decimal(str(r.rev))
         top_products.append(ProductRanking(
-            product_id=r.product_id,
+            product_id=str(r.product_id),
             product_name=r.product_name,
             quantity_sold=Decimal(str(r.qty)),
             revenue=rev,
@@ -264,7 +264,7 @@ def get_level3_contribution_margin(
         total_var_cost += vc
 
         by_product.append(ProductContribution(
-            product_id=r.product_id,
+            product_id=str(r.product_id),
             product_name=r.product_name,
             revenue=rev,
             variable_cost=vc,
