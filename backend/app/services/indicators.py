@@ -127,9 +127,11 @@ def get_level2_revenue(db: Session, clinic_id: str, year: int, month: int) -> Le
             extract("month", Transaction.date) == month,
         )
         .group_by(Product.id, Product.name)
-        .order_by(func.sum(TransactionItem.total_price).desc())
         .all()
     )
+
+    # ordena em Python para evitar conflito de aggregate no ORDER BY
+    rows = sorted(rows, key=lambda r: r.rev, reverse=True)
 
     top_products = []
     for r in rows:
